@@ -6,12 +6,10 @@ public class UnlockableDoor : ObjectSlider
 {
     [SerializeField] PuzzleBase puzzle = null;
 
+
     private bool doorOpened = false;
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     protected override void Update()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CubePuzzle : MonoBehaviour
 {
     [SerializeField] public GameObject cubeObject;
-    [SerializeField] GameObject cubeParent;
+    //[SerializeField] GameObject cubeParent;
     
     private Quaternion startRot;
     private Quaternion cubeRot;
@@ -19,11 +19,12 @@ public class CubePuzzle : MonoBehaviour
     private bool rotating = false;
     private bool calculated = false;
 
-    
+    private AudioSource button;
 
     // Start is called before the first frame update
     void Start()
     {
+        button = GetComponent<AudioSource>();
         startRot = cubeObject.transform.rotation;
         cubeRot = startRot;
         x = startRot.eulerAngles.x;
@@ -32,6 +33,7 @@ public class CubePuzzle : MonoBehaviour
         startx = startRot.eulerAngles.x;
         starty = startRot.eulerAngles.y;
         startz = startRot.eulerAngles.z;
+        Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
     }
 
     // Update is called once per frame
@@ -52,23 +54,29 @@ public class CubePuzzle : MonoBehaviour
 
         if (objectName.transform.name == "UpButton")
         {
-            if (Mathf.Abs(y) == startRot.eulerAngles.y || Mathf.Abs(y - startRot.eulerAngles.y) % 360 < 0.001f)
+            button.Play();
+            if (Mathf.Abs(y) == startRot.eulerAngles.y && z > 90.0f || Mathf.Abs(y - startRot.eulerAngles.y) % 360 < 0.001f )
             {
                 x += 90;
+                Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             }
-            else if(Mathf.Abs(y - startRot.eulerAngles.y) % 180 < 0.001f)
+            else if(Mathf.Abs(y - startRot.eulerAngles.y) % 180 < 0.001f ||
+                (Mathf.Abs(y - startRot.eulerAngles.y) % 180 < 0.001f) && ((Mathf.Abs(z - startRot.eulerAngles.z) % 90 < 0.001f)))
             {
                 x -= 90;
+                Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             }
             else if (Mathf.Abs(y - startRot.eulerAngles.y) % 270 < 0.001f)
             {
                 if (y < startRot.eulerAngles.y)
                 {
                     z += 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
                 else
                 {
                     z -= 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
             }
             else if (Mathf.Abs(y - startRot.eulerAngles.y) % 90 < 0.001f)
@@ -76,33 +84,40 @@ public class CubePuzzle : MonoBehaviour
                 if (y < startRot.eulerAngles.y)
                 {
                     z -= 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
                 else
                 {
                     z += 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
             }
             rotating = true;
         }
         else if (objectName.transform.name == "DownButton")
         {
+            button.Play();
             if (Mathf.Abs(y) == startRot.eulerAngles.y || Mathf.Abs(y - startRot.eulerAngles.y) % 360 < 0.001f)
             {
                 x -= 90;
+                Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             }
             else if (Mathf.Abs(y - startRot.eulerAngles.y) % 180 < 0.001f)
             {
                 x += 90;
+                Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             }
             else if (Mathf.Abs(y - startRot.eulerAngles.y) % 270 < 0.001f)
             {
                 if (y < startRot.eulerAngles.y)
                 {
                     z -= 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
                 else
                 {
                     z += 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
             }
             else if (Mathf.Abs(y - startRot.eulerAngles.y) % 90 < 0.001f)
@@ -110,29 +125,37 @@ public class CubePuzzle : MonoBehaviour
                 if (y < startRot.eulerAngles.y)
                 {
                     z += 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
                 else
                 {
                     z -= 90;
+                    Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
                 }
             }
             rotating = true;
         }
         else if (objectName.transform.name == "LeftButton")
         {
+            button.Play();
             y += 90;
+            Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             rotating = true;
         }
         else if (objectName.transform.name == "RightButton")
         {
+            button.Play();
             y -= 90;
+            Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             rotating = true;
         }
         else if (objectName.transform.name == "ResetButton")
         {
+            button.Play();
             x = startx;
             y = starty;
             z = startz;
+            Debug.Log("X: " + x + " Y: " + y + " Z: " + z);
             rotating = true;
         }
     }

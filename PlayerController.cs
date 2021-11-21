@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller = null;
     private bool holdingItem = false;
 
+    private AudioSource footstep;
+
     //Movement Vectors
     private Vector2 currentDir = Vector2.zero;
     private Vector2 currentDirVelocity = Vector2.zero;
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     {
         cp = cubeEventObject.GetComponent<CubePuzzle>();
         controller = GetComponent<CharacterController>();
+        footstep = GetComponent<AudioSource>();
         if(lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -62,6 +65,8 @@ public class PlayerController : MonoBehaviour
     void UpdateMouseLook()
     {
         Vector2 targetMouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        
+
 
         currentMouseDelta = Vector2.SmoothDamp(currentMouseDelta, targetMouseDelta, ref currentMouseDeltaVelocity, mouseSmoothTime);
 
@@ -77,6 +82,13 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 targetDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         targetDir.Normalize();
+        if (targetDir != new Vector2(0, 0))
+        {
+            if(!footstep.isPlaying)
+                footstep.Play();
+        }
+        else
+            footstep.Stop();
 
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, moveSmoothTime);
 

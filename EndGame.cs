@@ -11,7 +11,7 @@ public class EndGame : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = true;
-            SceneManager.LoadScene("MenuScene");
+            SceneManager.LoadScene("Credits");
         }
     }
 }
